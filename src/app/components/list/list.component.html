@@ -1,0 +1,38 @@
+<div style="padding: 2rem;" *ngIf="list.length > 0;else nodata">
+  <h2 style="text-align: center;">To Do List</h2>
+  <div class="row">
+    <input class="text-input" type="text" (keyup)="searchTask(search.value)" placeholder="Search..." #search>
+  </div>
+  <div *ngFor="let item of list">
+    <div class="row" [ngClass]="item.done ? 'border-success' : 'border'" style="margin-top: 1rem; padding: 0.5rem;">
+      <div style="margin: 0px 1rem;">
+        <input type="checkbox" style="width: 1.25rem; height: 1.25rem;" [checked]="item.done"
+          (click)="openAction(item)">
+      </div>
+      <div class="task-title flex-grow" style="font-size: 1.1rem;">{{item.title}}</div>
+      <div style="margin: 0px 1rem;">
+        <button *ngIf="!item.show" class="btn btn-detail" (click)="item.show = !item.show; isReset = false">
+          Detail
+        </button>
+        <button *ngIf="item.show" class="btn btn-close" (click)="item.show = !item.show; isReset = true">
+          Close
+        </button>
+        <button class="btn btn-remove" style="margin-right: 0px;" (click)="removeTask(item.id)">Remove</button>
+      </div>
+    </div>
+    <div [ngClass]="item.done ? 'border-success' : 'border'" style="border-top: 0px;"
+      [ngStyle]="{ 'display': item.show ? 'block' : 'none' }">
+      <app-detail [isCreatePage]="false" [item]="item" [reset]="isReset" [done]="item.done"></app-detail>
+    </div>
+  </div>
+  <div class="row bulk-action border" style="margin-top: 1rem;" *ngIf="isOpenAction && list.length > 0">
+    <div class="flex-grow">Bulk Action:</div>
+    <div>
+      <button class="btn btn-lg btn-done" (click)="completeTask()">Done</button>
+      <button class="btn btn-lg btn-remove" (click)="removeTask()">Remove</button>
+    </div>
+  </div>
+</div>
+<ng-template #nodata>
+  <h1 style="text-align: center; color: lightgray;">No task found</h1>
+</ng-template>

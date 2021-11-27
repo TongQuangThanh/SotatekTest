@@ -1,0 +1,42 @@
+<div style="padding: 3rem;">
+  <h2 style="text-align: center;" *ngIf="isCreatePage">New Task</h2>
+  <form #detailForm="ngForm" (ngSubmit)="saveTask()">
+    <div>
+      <input class="text-input" type="text" name="title" required [(ngModel)]="item.title" [disabled]="done"
+        (focusout)="isSubmitted = false" [placeholder]="isCreatePage ? 'Add new task...' : 'Task title...'">
+      <div style="color: red; margin-top: 0.5rem;"
+        *ngIf="detailForm.controls.title?.errors?.required && detailForm.controls.title?.touched && !isSubmitted">Title
+        is required!
+      </div>
+    </div>
+    <div style="margin-top: 1rem;">
+      <div style="margin-bottom: 0.5rem;">
+        <label for="description"><b>Description</b></label>
+      </div>
+      <textarea name="description" id="description" cols="30" rows="10" [(ngModel)]="item.description"
+        [disabled]="done"></textarea>
+    </div>
+    <div class="row" style="margin-top: 1rem;">
+      <div class="col-md-6" style="padding-right: 1rem">
+        <div style="margin-bottom: 0.5rem;">
+          <label for="date"><b>Due Date</b></label>
+        </div>
+        <input id="date" name="date" class="border" type="date" style="border: 1px solid black" [min]="today"
+          [disabled]="done" [(ngModel)]="item.date">
+      </div>
+      <div class="col-md-6" style="padding-left: 1rem;">
+        <div style="margin-bottom: 0.5rem;">
+          <label for="priority"><b>Priority</b></label>
+        </div>
+        <select name="priority" id="priority" class="border" [(ngModel)]="item.priority" [disabled]="done">
+          <option *ngFor="let item of priorities" [value]="item">{{item}}</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top: 1.5rem;">
+      <button type="submit" class="btn btn-success" style="margin: 0px;" [disabled]="!detailForm.form.valid">
+        {{ isCreatePage ? 'Add' : 'Update' }}
+      </button>
+    </div>
+  </form>
+</div>
