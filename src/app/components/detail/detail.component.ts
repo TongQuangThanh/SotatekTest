@@ -8,7 +8,7 @@ import { TodoTask } from 'src/app/model/task.model';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit, OnChanges {
-  today = new Date().toISOString().substring(0, 10);
+  today = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`;
   @Input() isCreatePage = true;
   initItem = {
     id: 0,
