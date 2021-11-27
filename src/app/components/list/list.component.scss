@@ -1,9 +1,24 @@
 .task-title {
   margin-left: 1rem;
   color: gray;
+  word-break: break-all;
 }
 
 .bulk-action {
   padding: 1rem;
   background-color: lightgray;
+}
+
+.button-group {
+  display: flex;
+}
+
+@media screen and (max-width: 768px) {
+  .button-group {
+    align-self: flex-end;
+  }
+  .bulk-action {
+    display: flex;
+    flex-direction: column;
+  }
 }
